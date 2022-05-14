@@ -15,10 +15,13 @@ class Decor {
     );
   }
 
-
-textform (){
-  return InputDecoration();
-}
+  textform() {
+    return InputDecoration(
+      fillColor: Colors.grey.withOpacity(.3),
+      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ,
+        focusedBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)));
+  }
 }
 
 class UserColors {
