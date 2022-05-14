@@ -4,17 +4,36 @@ import 'package:vigo/model/decorations.dart';
 import 'package:vigo/model/sizemodel.dart';
 
 class CustomWidget {
-  appbar({required BuildContext context, Widget? titleWidget}) {
+  appbar(
+      {required BuildContext context,
+      Widget? titleWidget,
+      bool? dash = false}) {
     Sizes().heightSizeCalc(context);
     Sizes().widthSizeCalc(context);
     return AppBar(
       backgroundColor: Colors.white,
+      leading: null,
+      automaticallyImplyLeading: false,
       elevation: 0,
-      title: Image.asset(
-        AssetsPath.vigologo,
-        width: Sizes.w100,
-      ),
-      centerTitle: true,
+      title: dash!
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  AssetsPath.vigologo,
+                  width: Sizes.w100,
+                ),
+                Image.asset(
+                  AssetsPath.wallet,
+                  width: Sizes.w25,
+                )
+              ],
+            )
+          : Image.asset(
+              AssetsPath.vigologo,
+              width: Sizes.w100,
+            ),
+      centerTitle: dash ? false : true,
     );
   }
 
@@ -53,5 +72,12 @@ class CustomWidget {
 customDivider({double? height}) {
   return Divider(
     height: height ?? 1,
+    color: Colors.transparent,
+  );
+}
+
+customhorizontal({double? width}) {
+  return VerticalDivider(
+    width: width ?? 1,
   );
 }

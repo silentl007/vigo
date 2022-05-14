@@ -15,12 +15,18 @@ class Decor {
     );
   }
 
-  textform() {
+  textform({String? hint, Widget? prefixIcon, Widget? suffixIcon}) {
     return InputDecoration(
-      fillColor: Colors.grey.withOpacity(.3),
-      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ,
-        focusedBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)));
+        focusColor: UserColors.purple,
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        hintText: hint,
+        fillColor: Colors.grey.withOpacity(.1),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.withOpacity(.3))),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.withOpacity(.3))));
   }
 }
 

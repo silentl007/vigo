@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vigo/home/login.dart';
+import 'package:vigo/home/signup.dart';
 import 'package:vigo/model/assets.dart';
 import 'package:vigo/model/customwidget.dart';
 import 'package:vigo/model/decorations.dart';
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
                 customDivider(height: Sizes.h15),
                 CustomWidget().buttons(
                     context: context,
-                    function: (){},
+                    function: signup,
                     buttonText: 'Sign up',
                     buttonColor: Colors.white,
                     textColor: UserColors.purple),
@@ -63,7 +64,13 @@ class _HomeState extends State<Home> {
     );
   }
 
-loginProceed (){
-  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Login()));
-}
+  loginProceed() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const Login()));
+  }
+
+  signup() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignUp()));
+  }
 }
