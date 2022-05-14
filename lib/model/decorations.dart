@@ -23,6 +23,10 @@ class Decor {
         hintText: hint,
         fillColor: Colors.grey.withOpacity(.1),
         filled: true,
+        focusedErrorBorder:
+            const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+        errorBorder:
+            const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.withOpacity(.3))),
         focusedBorder: OutlineInputBorder(

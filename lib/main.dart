@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vigo/home/home.dart';
+import 'package:vigo/model/decorations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,14 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Vigo',
+      title: 'Okpongu',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        primarySwatch: Colors.blue,
+        colorScheme: ThemeData().colorScheme.copyWith(
+          primary: UserColors.purple,
+            ),
       ),
       home: const Home(),
     );
   }
 }
-
-

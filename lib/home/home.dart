@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
                 top: Sizes.h20, left: Sizes.w15, right: Sizes.w15),
             child: Column(
               children: [
-                Image.asset(AssetsPath.login),
+                Image.asset(AssetsPath.login, width: double.infinity,height: Sizes.h330,),
                 customDivider(height: Sizes.h35),
                 Text(
                   'Build Connections. \nBuild wealth',
@@ -55,6 +55,8 @@ class _HomeState extends State<Home> {
                 CustomWidget().buttons(
                     context: context,
                     function: signup,
+                    useButtonColor: true,
+                    bordercolor: UserColors.purple,
                     buttonText: 'Sign up',
                     buttonColor: Colors.white,
                     textColor: UserColors.purple),

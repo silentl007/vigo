@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_is_empty
-
 import 'package:flutter/material.dart';
+import 'package:vigo/authentication/authcalls.dart';
 import 'package:vigo/home/dashboard.dart';
 import 'package:vigo/home/signup.dart';
 import 'package:vigo/model/assets.dart';
@@ -21,6 +20,7 @@ class _LoginState extends State<Login> {
   IconData visible = Icons.visibility_off;
   TextEditingController emailcontrol = TextEditingController();
   TextEditingController passwordcontrol = TextEditingController();
+  UserLogin userLogin = UserLogin();
   @override
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
@@ -67,6 +67,9 @@ class _LoginState extends State<Login> {
                           }
                           return null;
                         },
+                        onSaved: (value) {
+                          userLogin.username = value;
+                        },
                       ),
                       customDivider(height: Sizes.h20),
                       TextFormField(
@@ -91,11 +94,14 @@ class _LoginState extends State<Login> {
                           }
                           return null;
                         },
+                        onSaved: (value) {
+                          userLogin.password = value;
+                        },
                       ),
                       customDivider(height: Sizes.h20),
                       CustomWidget().buttons(
                           context: context,
-                          function: dashboard,
+                          function: login,
                           buttonText: 'Login',
                           buttonColor: UserColors.purple),
                     ],
@@ -152,11 +158,35 @@ class _LoginState extends State<Login> {
     }
   }
 
-  dashboard() {
+  login() {
     var form = _formkey.currentState;
     if (form!.validate()) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const Dashboard()));
+      form.save();
+      waitDiag();   
     }
+  }
+
+  waitDiag() {
+    return showDialog(
+        context: context,
+        builder: (context) => FutureBuilder(
+            future: userLogin.login(context),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return CustomWidget().loadingDiag(context);
+              } else if (snapshot.data == 200) {
+                todashboard();
+                return Container();
+              } else {
+                return Container();
+              }
+            }));
+  }
+  todashboard (){
+     WidgetsBinding.instance?.addPostFrameCallback((_) {
+      Navigator.pop(context);
+       Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const Dashboard()));
+    });
   }
 }

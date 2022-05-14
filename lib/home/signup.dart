@@ -2,6 +2,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:vigo/authentication/authcalls.dart';
 import 'package:vigo/model/assets.dart';
 import 'package:vigo/model/customwidget.dart';
 import 'package:vigo/model/decorations.dart';
@@ -27,6 +28,8 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordcontrol = TextEditingController();
   TextEditingController passwordcontrol1 = TextEditingController();
   bool acceptTerms = false;
+  UserRegister userRegister = UserRegister();
+  DateTime selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
@@ -74,6 +77,9 @@ class _SignUpState extends State<SignUp> {
                       }
                       return null;
                     },
+                    onSaved: (value) {
+                      userRegister.fullname = value;
+                    },
                   ),
                   customDivider(height: Sizes.h20),
                   TextFormField(
@@ -96,6 +102,9 @@ class _SignUpState extends State<SignUp> {
                         return 'Please input your username';
                       }
                       return null;
+                    },
+                    onSaved: (value) {
+                      userRegister.username = value;
                     },
                   ),
                   customDivider(height: Sizes.h20),
@@ -120,9 +129,16 @@ class _SignUpState extends State<SignUp> {
                       }
                       return null;
                     },
+                    onSaved: (value) {
+                      userRegister.email = value;
+                    },
                   ),
                   customDivider(height: Sizes.h20),
                   TextFormField(
+                    onTap: () {
+                      _selectDate(context);
+                    },
+                    readOnly: true,
                     controller: datecontrol,
                     keyboardType: TextInputType.datetime,
                     textInputAction: TextInputAction.next,
@@ -142,6 +158,9 @@ class _SignUpState extends State<SignUp> {
                         return 'Please input your date of birth';
                       }
                       return null;
+                    },
+                    onSaved: (value) {
+                      userRegister.dob = value;
                     },
                   ),
                   customDivider(height: Sizes.h20),
@@ -168,6 +187,9 @@ class _SignUpState extends State<SignUp> {
                         return 'Please input your password';
                       }
                       return null;
+                    },
+                    onSaved: (value) {
+                      userRegister.password = value;
                     },
                   ),
                   customDivider(height: Sizes.h20),
@@ -278,6 +300,21 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(
+          1970,
+        ),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        datecontrol.text = '${picked.year}-${picked.month}-${picked.day}';
+      });
+    }
+  }
+
   passfunc() {
     if (obscure) {
       setState(() {
@@ -308,6 +345,38 @@ class _SignUpState extends State<SignUp> {
 
   signup() {
     var form = _formkey.currentState;
-    if (form!.validate()) {}
+    if (form!.validate()) {
+      if (acceptTerms) {
+        form.save();
+        waitDiag();
+      }
+    }
   }
+
+  waitDiag() {
+    return showDialog(
+        context: context,
+        builder: (context) => FutureBuilder(
+            future: userRegister.register(context),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return CustomWidget().loadingDiag(context);
+              } else if (snapshot.data == 200) {
+                CustomWidget().waitDiagfeedback(
+                    'Account created successfully. \nContinue to login screen to access account ',
+                    context);
+                return Container();
+              } else {
+                return Container();
+              }
+            }));
+  }
+
+  // todashboard() {
+  //   WidgetsBinding.instance?.addPostFrameCallback((_) {
+  //     Navigator.pop(context);
+  //     Navigator.of(context)
+  //         .push(MaterialPageRoute(builder: (context) => const Dashboard()));
+  //   });
+  // }
 }
