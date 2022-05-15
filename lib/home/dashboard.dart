@@ -32,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
         likes: '6.1k',
         comment: '123'),
   ];
+  // ignore: prefer_final_fields
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {

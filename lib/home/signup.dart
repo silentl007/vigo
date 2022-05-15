@@ -180,8 +180,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-                        suffixIcon: IconButton(
-                            onPressed: passfunc, icon: Icon(visible))),
+                        suffixIcon: GestureDetector(
+                            onTap: passfunc, child: Icon(visible))),
                     validator: (value) {
                       if (value!.isEmpty || value.trim().length == 0) {
                         return 'Please input your password';
@@ -198,7 +198,7 @@ class _SignUpState extends State<SignUp> {
                     controller: passwordcontrol1,
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.next,
-                    onEditingComplete: () => node.nextFocus(),
+                    onEditingComplete: () => node.unfocus(),
                     decoration: Decor().textform(
                         hint: 'Confirm Password',
                         prefixIcon: const Padding(
@@ -209,8 +209,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-                        suffixIcon: IconButton(
-                            onPressed: passfunc1, icon: Icon(visible1))),
+                        suffixIcon: GestureDetector(
+                            onTap: passfunc1, child: Icon(visible1))),
                     validator: (value) {
                       if (value!.isEmpty || value.trim().length == 0) {
                         return 'Please input your confirm password';

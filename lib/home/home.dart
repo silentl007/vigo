@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
                 ),
                 customDivider(height: Sizes.h35),
                 Text(
-                    'Vigoplace integrates all of your personal, business and online interaction needs into one simple user-friendly \napplication.',
+                    'Vigoplace integrates all of your personal, business and online interaction needs into one simple user-friendly application.',
                     textAlign: TextAlign.center,
                     style: Decor().textStyle(
                         color: Colors.grey,

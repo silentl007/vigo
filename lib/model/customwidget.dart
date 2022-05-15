@@ -57,7 +57,7 @@ class CustomWidget {
           decoration: BoxDecoration(
               border: Border.all(color: bordercolor ?? Colors.transparent),
               borderRadius: BorderRadius.all(Radius.circular(Sizes.w15)),
-              boxShadow: [BoxShadow(color: buttonColor!)],
+              boxShadow: [BoxShadow(color: buttonColor?? UserColors.purple)],
               gradient: useButtonColor == false
                   ? const LinearGradient(
                       begin: Alignment.topCenter,
@@ -124,6 +124,20 @@ class CustomWidget {
                   style: Decor().textStyle(),
                 ),
               ),
+              actions: [
+                Center(
+                  child: SizedBox(
+                    height: Sizes.h40,
+                    width: Sizes.w100,
+                    child: CustomWidget().buttons(
+                        context: context,
+                        buttonText: 'OK',
+                        function: () {
+                          Navigator.of(context).pop();
+                        }),
+                  ),
+                )
+              ],
             ));
   }
 }

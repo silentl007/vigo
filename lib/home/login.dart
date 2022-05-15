@@ -62,6 +62,7 @@ class _LoginState extends State<Login> {
                               ),
                             )),
                         validator: (value) {
+                          // ignore: prefer_is_empty
                           if (value!.isEmpty || value.trim().length == 0) {
                             return 'Please input your username or email address';
                           }
@@ -75,7 +76,7 @@ class _LoginState extends State<Login> {
                       TextFormField(
                         obscureText: obscure,
                         controller: passwordcontrol,
-                        onEditingComplete: () => node.nextFocus(),
+                        onEditingComplete: () => node.unfocus(),
                         decoration: Decor().textform(
                             hint: 'Password',
                             prefixIcon: const Padding(
@@ -86,9 +87,10 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
-                            suffixIcon: IconButton(
-                                onPressed: passfunc, icon: Icon(visible))),
+                            suffixIcon: GestureDetector(
+                                onTap: passfunc, child: Icon(visible))),
                         validator: (value) {
+                          // ignore: prefer_is_empty
                           if (value!.isEmpty || value.trim().length == 0) {
                             return 'Please input your password';
                           }
@@ -162,7 +164,7 @@ class _LoginState extends State<Login> {
     var form = _formkey.currentState;
     if (form!.validate()) {
       form.save();
-      waitDiag();   
+      waitDiag();
     }
   }
 
@@ -182,10 +184,11 @@ class _LoginState extends State<Login> {
               }
             }));
   }
-  todashboard (){
-     WidgetsBinding.instance?.addPostFrameCallback((_) {
+
+  todashboard() {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       Navigator.pop(context);
-       Navigator.of(context)
+      Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const Dashboard()));
     });
   }
